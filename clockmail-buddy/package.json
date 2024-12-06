@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
+    "docker-build": "sudo docker build -t clockmail-buddy .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
