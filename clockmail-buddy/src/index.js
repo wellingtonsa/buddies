@@ -27,7 +27,7 @@ async function init() {
     const query = {
       dateRangeStart: invoiceMonth,
       dateRangeEnd: date
-        .endOfDay(date.setDate(invoiceMonth, date.getDaysInMonth(invoiceMonth) - 1)).toISOString(),
+        .endOfDay(date.setDate(invoiceMonth, date.getDaysInMonth(invoiceMonth))).toISOString(),
       detailedFilter: {},
       projects: {
         ids: [process.env.PROJECT_ID]
@@ -109,6 +109,14 @@ async function init() {
   app.listen(PORT, async () => {
     console.log(`App started at http://localhost:${PORT}`);
     console.log("Initializing service...");
+
+    app.get('/health', (req, res) => {
+      return res
+        .status(200)
+        .json({
+          ok: true, message: 'Your service is just fine, don\'t worry! :D '
+        });
+    })
 
     await initCronJobs();
   });
