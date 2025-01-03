@@ -19,15 +19,17 @@ async function init() {
 
   // Download invoice file
   const invoiceMonth = date
-    .startOfDay(date.sub(new Date(), { months: 1 })
-      .setUTCDate(1))
-    .toISOString();
+    .startOfDay(date.sub(new Date(), { months: 1, hours: 3 })
+      .setUTCDate(1));
+
+
 
   async function generateInvoice() {
+    const dateRangeStart = invoiceMonth.toISOString();
+    const dateRangeEnd = date.endOfDay(date.sub(invoiceMonth.setUTCDate(date.getDaysInMonth(invoiceMonth)), { hours: 3 })).toISOString();
     const query = {
-      dateRangeStart: invoiceMonth,
-      dateRangeEnd: date
-        .endOfDay(date.setDate(invoiceMonth, date.getDaysInMonth(invoiceMonth))).toISOString(),
+      dateRangeStart,
+      dateRangeEnd,
       detailedFilter: {},
       projects: {
         ids: [process.env.PROJECT_ID]
